@@ -3,7 +3,7 @@ const { Module } = require('sdop');
 module.exports = new Module({}, c => {
   var r = c.registry;
   r.put('Registrar', 'sdop.discord.Command', {});
-  r.put('Registrar', 'sdop.dicsord.MultiCommand', {
+  r.put('Registrar', 'sdop.discord.MultiCommand', {
     put: c => {
       var name = c.name;
       var defaultfn = c.value.default;
