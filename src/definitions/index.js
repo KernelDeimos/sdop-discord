@@ -9,7 +9,7 @@ module.exports = new Module({}, c => {
       var defaultfn = c.value.default;
       var beforefn = c.value.before || (c => c);
       var afterfn = c.value.after || (c => c);
-      r.put('Command', c.name, {
+      r.put('sdop.discord.Command', c.name, {
         fn: c => {
           if ( c.args.length < 2 ) {
             if ( defaultfn ) {
@@ -20,7 +20,7 @@ module.exports = new Module({}, c => {
               return c;
             }
           }
-          var cmdfn = r.get('Command', `${name}.${c.args[1]}`);
+          var cmdfn = r.get('sdop.discord.Command', `${name}.${c.args[1]}`);
           if ( ! cmdfn ) {
             c.msg.reply('unknown command');
             return c;
