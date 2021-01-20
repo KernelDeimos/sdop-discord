@@ -1,6 +1,6 @@
 {
   "name": "sdop-discord",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build Discord bots using SDOP framework",
   "main": "src/index.js",
   "author": "KernelDeimos <eric.alex.dube@gmail.com>",
