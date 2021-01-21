@@ -8,5 +8,5 @@ module.exports = new Module({
   var r = c.registry;
   r.put('Module', 'sdop.discord.plugin.Data', require('./Data'));
   r.put('Module', 'sdop.discord.plugin.Permissions', require('./Permissions'));
-  // r.put('Module', 'sdop.discord.plugin.Warn', require('./Warn'));
+  r.put('Module', 'sdop.discord.plugin.Warn', require('./Warn'));
 });

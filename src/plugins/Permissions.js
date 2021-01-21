@@ -1,4 +1,6 @@
 const { Module } = require('sdop');
+
+// TODO: use Sequence for common conditions
 module.exports = new Module({}, c => {
   var r = c.registry;
 
@@ -15,6 +17,11 @@ module.exports = new Module({}, c => {
       }
     }
     return Object.keys(permSet);
+  };
+
+  var check_dab_sudo = c => {
+    if ( c.msg.member.hasPermission('ADMINISTRATOR') ) return true;
+    return false;
   };
 
   r.put('Function', 'sdop.discord.permissions.get', c => {
@@ -39,7 +46,7 @@ module.exports = new Module({}, c => {
   r.put('sdop.discord.Command', 'sdop.discord.cmd.perm.show-roles', {
     fn: c => {
       if ( ! c.msg.guild ) {
-        msg.reply('Invalid; command can only be used on a server');
+        c.msg.reply('Invalid; command can only be used on a server');
         return c;
       }
       var member = c.msg.mentions.members.first() || c.msg.member;
@@ -55,11 +62,15 @@ module.exports = new Module({}, c => {
   r.put('sdop.discord.Command', 'sdop.discord.cmd.perm.add', {
     fn: c => {
       if ( ! c.msg.guild ) {
-        msg.reply('Invalid; command can only be used on a server');
+        c.msg.reply('Invalid; command can only be used on a server');
         return c;
       }
       if ( c.args < 3 ) {
-        msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
+        c.msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
+        return c;
+      }
+      if ( ! check_dab_sudo(c) ) {
+        c.msg.reply(`You must be admin to do this`);
         return c;
       }
       var role = c.args[1];
@@ -78,11 +89,15 @@ module.exports = new Module({}, c => {
   r.put('sdop.discord.Command', 'sdop.discord.cmd.perm.remove', {
     fn: c => {
       if ( ! c.msg.guild ) {
-        msg.reply('Invalid; command can only be used on a server');
+        c.msg.reply('Invalid; command can only be used on a server');
         return c;
       }
       if ( c.args < 3 ) {
-        msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
+        c.msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
+        return c;
+      }
+      if ( ! check_dab_sudo(c) ) {
+        c.msg.reply(`You must be admin to do this`);
         return c;
       }
       var role = c.args[1];
@@ -99,11 +114,11 @@ module.exports = new Module({}, c => {
   r.put('sdop.discord.Command', 'sdop.discord.cmd.perm.show-user-perms', {
     fn: c => {
       if ( ! c.msg.guild ) {
-        msg.reply('Invalid; command can only be used on a server');
+        c.msg.reply('Invalid; command can only be used on a server');
         return c;
       }
       if ( c.args < 2 ) {
-        msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
+        c.msg.reply(`Invalid; usage: <prefix> perm add <role> <permission>`);
         return c;
       }
       var member = c.msg.mentions.members.first() || c.msg.member;
