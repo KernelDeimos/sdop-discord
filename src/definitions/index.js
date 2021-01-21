@@ -6,6 +6,7 @@ module.exports = new Module({}, c => {
   r.put('Registrar', 'sdop.discord.MultiCommand', {
     put: c => {
       var name = c.name;
+      c.value = c.value || {};
       var defaultfn = c.value.default;
       var beforefn = c.value.before || (c => c);
       var afterfn = c.value.after || (c => c);
